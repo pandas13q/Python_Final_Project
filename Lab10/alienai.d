@@ -1,0 +1,10 @@
+.\alienai.o: AlienAI.c
+.\alienai.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\alienai.o: tm4c123gh6pm.h
+.\alienai.o: globals.h
+.\alienai.o: conversions.h
+.\alienai.o: ADC.h
+.\alienai.o: levels.h
+.\alienai.o: Tileset.h
+.\alienai.o: ST7735.h
+.\alienai.o: movement.h
