@@ -2,7 +2,7 @@
 """
 Created on Fri Mar 15 14:47:49 2019
 
-@author: yanhao
+@author: 
 """
 import pygame, sys, random
 pygame.init()
