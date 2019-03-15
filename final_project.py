@@ -14,17 +14,45 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 GREEN = (0, 155, 0)
-GREY = (220, 220, 220)
+GREY = (128, 128, 128)
 screen = pygame.display.set_mode((X, Y))
 pygame.display.set_caption("Pygame Presentation by Siyuan and Summer")
 clock = pygame.time.Clock()
 pygame.time.set_timer(pygame.USEREVENT + 1, 10000)
 class Platform():
     rects = []
-    def __init__(self, sizex, sizey, posx, posy, color):
-        self.surf = pygame.surface.Surface((sizex, sizey))
+    def __init__(self, posx, posy):
+        self.surf = pygame.image.load('WallPy.bmp').convert()
         self.rect = self.surf.get_rect(midbottom=(posx, posy))
-        self.surf.fill(color)
+        Platform.rects.append(self.rect)
+    def draw(self):
+        screen.blit(self.surf, self.rect)
+    def event(self):
+        pass
+    
+class Spike():
+    def __init__(self, posx, posy, direction):#0:up 1:right 2:down 3:left
+        if direction==0:
+            self.surf = pygame.image.load('Spike0.bmp').convert()
+        elif direction==1:
+            self.surf = pygame.image.load('Spike90.bmp').convert()
+        elif direction==2:
+            self.surf = pygame.image.load('Spike180.bmp').convert()
+        else:
+            self.surf = pygame.image.load('Spike270.bmp').convert()
+        self.rect = self.surf.get_rect(midbottom=(posx, posy))
+        Platform.rects.append(self.rect)
+    def draw(self):
+        screen.blit(self.surf, self.rect)
+    def event(self):
+        pass
+    
+class Exit():
+    rects = []
+    def __init__(self, posx, posy):
+        self.surf = pygame.surface.Surface((40, 40))
+        self.rect = self.surf.get_rect(midbottom=(posx, posy))
+        self.surf.fill(GREY)
         Platform.rects.append(self.rect)
     def draw(self):
         screen.blit(self.surf, self.rect)
@@ -36,7 +64,7 @@ class Player():
         self.jump = False
         self.left = False
         self.right = False
-        self.surf = pygame.image.load('SpriteAstroR0.bmp').convert()
+        self.surf = pygame.image.load('AstroRLarge.bmp').convert()
         self.rect = self.surf.get_rect(midbottom=(X//2, Y - 100))
         self.y_speed = 0
     def event(self):
@@ -68,7 +96,7 @@ class Player():
         
 class Enemy():
     def __init__(self):
-        self.surf = pygame.image.load('SpriteAstroR0.bmp').convert()
+        self.surf = pygame.image.load('Alien0.bmp').convert()
         self.rect = self.surf.get_rect(midtop=(X//2, 0))
         self.x_speed = random.randint(3, 7)
         self.y_speed = 0
@@ -104,8 +132,8 @@ class Enemy():
 
 class Coin():
     def __init__(self):
-        self.positions = [(600, 245), (250, 325), (40, 500), (850, 500), (830, 245), (800, 325)]
-        self.surf = pygame.image.load('SpriteAstroR0.bmp').convert()
+        self.positions = [(780, 600), (700, 600)]
+        self.surf = pygame.image.load('Alien0.bmp').convert()
         self.rect = self.surf.get_rect(midbottom=random.choice(self.positions))
         self.count = 0
     def event(self):
@@ -127,13 +155,6 @@ class Game():
         self.level = 0
         self.state = self.startpage
     def init(self):
-        """
-150
-    A game state function.
-151
-    Called at the start of a new level.
-152
-"""
         self.lives = 5
         self.coin_count = 0
         self.sprites = [self]
@@ -146,17 +167,77 @@ class Game():
         self.sprites.append(self.enemy)
         self.coin = Coin()
         self.sprites.append(self.coin)
-        self.sprites.append(Platform(X, 100, X//2, Y, GREEN))
-        self.sprites.append(Platform(200, 15, 500, Y-180, BLUE))
-        self.sprites.append(Platform(300, 15, 200, 340, BLUE))
-        self.sprites.append(Platform(250, 15, 480, 260, BLUE))
-        self.sprites.append(Platform(300, 15, 150, 180, BLUE))
-        self.sprites.append(Platform(300, 15, 500, 100, BLUE))
-        self.sprites.append(Platform(80, 15, 830, 260, BLUE))
-        self.sprites.append(Platform(80, 15, 800, 340, BLUE))
+        for i in range(20):
+            self.sprites.append(Platform(20+i*40,40))
+            self.sprites.append(Platform(20+i*40,640))
+        for i in range(13):
+            self.sprites.append(Platform(20,80+i*40))
+            self.sprites.append(Platform(780,80+i*40))
+        self.sprites.append(Platform(20,80+13*40))
+        self.sprites.append(Platform(20+40*6,40+40*1))
+        self.sprites.append(Platform(20+40*6,40+40*2))
+        self.sprites.append(Platform(20+40*6,40+40*3))
+        self.sprites.append(Platform(20+40*6,40+40*6))
+        self.sprites.append(Platform(20+40*6,40+40*7))
+        self.sprites.append(Platform(20+40*6,40+40*8))
+        self.sprites.append(Platform(20+40*6,40+40*9))
+        self.sprites.append(Platform(20+40*6,40+40*10))
+        self.sprites.append(Platform(20+40*6,40+40*11))
+        self.sprites.append(Platform(20+40*6,40+40*12))
+        self.sprites.append(Platform(20+40*6,40+40*13))
+        self.sprites.append(Platform(20+40*6,40+40*14))
+        for i in range(11):
+            self.sprites.append(Platform(20+40*3+i*40,40+40*6))
+            
+        self.sprites.append(Spike(20+40*5,40+40*1,3))
+        self.sprites.append(Spike(20+40*5,40+40*2,3))
+        self.sprites.append(Spike(20+40*5,40+40*3,3))
+        self.sprites.append(Spike(20+40*5,40+40*7,3))
+        self.sprites.append(Spike(20+40*5,40+40*8,3))
+        self.sprites.append(Spike(20+40*5,40+40*9,3))
+        self.sprites.append(Spike(20+40*5,40+40*10,3))
+        self.sprites.append(Spike(20+40*5,40+40*11,3))
+        self.sprites.append(Spike(20+40*5,40+40*12,3))
+        self.sprites.append(Spike(20+40*5,40+40*13,3))
+        self.sprites.append(Spike(20+40*5,40+40*14,3))
+        
+        self.sprites.append(Exit(810,600))
+        
+        for i in range(10):
+            self.sprites.append(Spike(20+40*7+i*40,600,0))
+        
     def level_2(self):
         print("LEVEL 2")
-        self.level_1()  # level 1 used as dummy
+        self.player = Player()
+        self.sprites.append(self.player)
+        self.enemy = Enemy()
+        self.sprites.append(self.enemy)
+        self.coin = Coin()
+        self.sprites.append(self.coin)
+        for i in range(20):
+            self.sprites.append(Platform(20+i*40,40))
+            self.sprites.append(Platform(20+i*40,640))
+        for i in range(13):
+            self.sprites.append(Platform(20,80+i*40))
+            self.sprites.append(Platform(780,80+i*40))
+        self.sprites.append(Platform(20,80+13*40))
+        for i in range(8):
+            self.sprites.append(Platform(20+40+i*40,40+40*3))
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
     def level_3(self):
         print("LEVEL 3")
         self.level_1()  # level 1 used as dummy
@@ -195,7 +276,7 @@ class Game():
         pygame.display.flip()
         if self.lives == 0:
             self.state = self.play_again
-        if self.coin_count == 10:
+        if self.coin_count == 1:#######################level up condition
             self.level += 1
             self.state = self.init
     def play_again(self):
