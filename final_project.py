@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Mar 15 14:47:49 2019
-
-@author: 
-"""
 import pygame, sys, random
 pygame.init()
 X = 800
@@ -65,7 +59,7 @@ class Player():
         self.left = False
         self.right = False
         self.surf = pygame.image.load('AstroRLarge.bmp').convert()
-        self.rect = self.surf.get_rect(midbottom=(X//2, Y - 100))
+        self.rect = self.surf.get_rect(midbottom=(500,600))
         self.y_speed = 0
     def event(self):
         if self.jump:
@@ -97,7 +91,7 @@ class Player():
 class Enemy():
     def __init__(self):
         self.surf = pygame.image.load('Alien0.bmp').convert()
-        self.rect = self.surf.get_rect(midtop=(X//2, 0))
+        self.rect = self.surf.get_rect(midtop=(700,500))
         self.x_speed = random.randint(3, 7)
         self.y_speed = 0
     def event(self):
@@ -223,24 +217,48 @@ class Game():
         self.sprites.append(Platform(20,80+13*40))
         for i in range(8):
             self.sprites.append(Platform(20+40+i*40,40+40*3))
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+        for i in range(14):
+            self.sprites.append(Platform(20+40+i*40,40+40*10))
+        for i in range(9):
+            self.sprites.append(Platform(20+400+i*40,40+40*7))
+        self.sprites.append(Spike(20+40*3,40+40,2))
+        self.sprites.append(Spike(20+40*18,40+40,3))
+        self.sprites.append(Spike(20+40*6,40+40*2,0))
+        self.sprites.append(Spike(20+40*18,40+40*2,3)) 
+        self.sprites.append(Spike(20+40*18,40+40*3,3)) 
+        self.sprites.append(Spike(20+40*18,40+40*4,3)) 
+        self.sprites.append(Spike(20+40*18,40+40*5,3)) 
+        self.sprites.append(Exit(810,600))
     def level_3(self):
         print("LEVEL 3")
-        self.level_1()  # level 1 used as dummy
+        self.player = Player()
+        self.sprites.append(self.player)
+        self.enemy = Enemy()
+        self.sprites.append(self.enemy)
+        self.coin = Coin()
+        self.sprites.append(self.coin)
+        for i in range(20):
+            self.sprites.append(Platform(20+i*40,40))
+            self.sprites.append(Platform(20+i*40,640))
+        for i in range(12):
+            self.sprites.append(Platform(20,80+i*40))
+            self.sprites.append(Platform(780,80+i*40))            
+        self.sprites.append(Platform(20,80+13*40))
+        self.sprites.append(Platform(20,80+12*40))
+        for i in range(10):
+            self.sprites.append(Platform(20+40*2+i*40,40+40*4))
+        for i in range(11):
+            self.sprites.append(Platform(20+40*3,40+40*5+40*i))
+            self.sprites.append(Platform(20+40*8+40*i,40+40*7))
+        for i in range(8):
+            self.sprites.append(Platform(20+40*11+40*i,40+40*12))
+        for i in range(6):
+            self.sprites.append(Platform(20+40*4+i*40,40+40*9))
+            self.sprites.append(Spike(20+40*13+40*i,40+40*11,0))
+            self.sprites.append(Spike(20+40*4+40*i,40+40*14,0))
+            self.sprites.append(Spike(20+40*14+40*i,40+40*14,0))
+        self.sprites.append(Spike(20+40*4,40+40*1,2))    
+        self.sprites.append(Exit(810,560))
     def event(self):
         " a game state function "
         for event in pygame.event.get():
