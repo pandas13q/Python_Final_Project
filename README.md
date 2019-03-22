@@ -1,1 +1,36 @@
 # Python_Final_Project
+
+
+This project began as an attempt to learn more about both C and Python by translating a C game to Python. Below are the original plans and two subsequent status reports that express this idea and the project's evolution. The project turned into a Pygame as we became more familiar with resources available to us.
+
+
+<B><I>Please see "The Last Astronaut by Summer Gregurek and Siyuan Xuan.ipynb" for more information</I></B>
+
+
+<B>Final Project Proposal</B>
+
+Convert an existing game written in C++ to Python using Cython and hand-translation
+
+Summer Gregurek (sdg2439) and Siyuan Xuan (sx2535)
+
+PROJECT GOALS
+
+In this project, our primary goal is to take a video game that was written by Summer Gregurek in C++ and convert it into Python, with the stretch goal in mind of changing the board on which the game runs. The original game, The Last Astronaut, was developed as an EE 319K project in Spring 2016 and runs on the Texas Instruments TM4C123GXL LaunchPad. User input is gathered from external switches and a slide potentiometer, visual output is shown via a ST7735 LCD display, and music is output to headphones via a standard headphone jack. The purpose of converting the game to Python would be to keep the aforementioned input and output hardware the same as the original game setup, and to keep the playability, graphics, and overall functionality of the game the same as the original as well, but to change the board from the TI LaunchPad to the Raspberry Pi. Since the Raspberry Pi runs Python, translating the game from C++ to Python is a necessary step to get it to run in the new environment. Developing the Python code and testing it in simulation is the most important goal of our project, and actually running it on the boards with hardware implemented on a solderless breadboard would be a stretch goal for us as we enter the testing phase.
+
+Beyond the functional goal of changing the code from C++ to Python, and trying to change the board that runs the game from the TM4C to the Pi, we have several educational goals in mind to improve our depth of knowledge as engineers. Since we are both more familiar with C++ than Python, we feel that taking a project that exists in a language with which we are familiar and translating it to a language which we are learning will allow us to make connections between the two, which will help us with our educational goal of learning practical Python programming. Furthermore, if we do not want to translate all of the C++ code by hand into Python, we can use Cython, a programming language that acts as the middle ground between C/C++ and Python, to assist us. We do not know much about Cython, so throughout the project one of our goals would be to learn Cython and how it can make this project less tedious for us. We would also continue to learn about Numpy and object oriented Python programming as we translate the game.
+
+EXECUTION PLAN
+
+Our first step is to familiarize ourselves with the existing C++ code and ensure that it runs as we expect it to. We will then identify which pieces of old code we can use as-is as part of the Python project (such as graphics or level-design arrays) and place those directly into the new code. Then we will learn about Cython and determine which pieces of code can benefit from Cython translation, if any, and complete that part of the project. Then, we will have an iterative process of taking a piece of C++ code, translating it to Python by hand, adding it to the new project, and testing the whole. At the end of the process, if not before, we should be able to run the game in simulation, and possibly on the Raspberry Pi. As we develop our project, change requirements, and tackle obstacles, this execution plan may change.
+
+
+<B>Status 1:</B>
+
+Our team, consisting of Siyuan and myself, has made some progress in researching, project planning, and communication, and we plan to begin programming soon. We have been looking into methods of how to translate a program that is in a C-syntactical language into Python while keeping its features the same. So far we have discovered Cython, but have not yet completed any practice with it. What looks more promising than Cython is the ability to extend Python with C, as described at https://docs.python.org/3.1/extending/extending.html (Links to an external site.)Links to an external site.. I also found that the Raspberry Pi, the computer on which we plan to host our project, is compatible with the ST7735 LCD screen that was used in the original hardware, making both hardware interfacing and software adaptation less challenging for us. In the realm of project planning, we have decided to limit the scope of the video game somewhat, since it is a massive project with nearly one hundred source code files. We plan to do this by removing certain levels (there are currently about ten, and the game would be just as functional with only three), and by removing or changing the music so that we do not spend time trying to interface a DAC in hardware, and instead can focus on the software. As far as communication, we have exchanged emails and phone numbers, and have established a GitHub repository in which to store both the original C game files and our translated Python files as they are completed. By using commit messages and good version control practices, we can ensure that our program is contributed to by both parties, with the added benefit that we can work remotely and at our own pace. Our most tangible next steps are to get acquainted with the existing C code, remove redundant or unnecessary source code files from the original game that would not make sense in the Python iteration, and to begin programming some sort of driver function in Python that can be extended with the existing C files using the aforementioned research.
+
+
+<B>Status 2:</B>
+
+At this point in our project, Siyuan and I have done a lot of research regarding translating code from C to Python and have found that although it is possible, and that resources exist that can help accomplish this, it is not the most efficient way to tackle our project. We learned from a classmate about Pygame, a library that we were unaware of before, that makes it possible to create functioning computer games in Python without having to do any translation. We also learned from our classmates that using the Raspberry Pi to stage our game is going to be complex with the hardware we have, because the Pi uses 5 volt logic, and our hardware does not. Thus, we have opted, based on our research and help from classmates, to run the game in simulation on the computer using Pygame.
+
+We have completed a very basic platform game where our astronaut sprite can jump between blue platforms and walk on green solid ground within one level as of Monday, March 11th. This will be the platform game we demonstrate in class, but our final product will look more like the original C game, with reuse of the old space-themed graphics and increased functionality: namely to be killed by in-game enemy space aliens and the ability to collect coins and win the game. Currently only enough physics works to do platform collision detection with the player character and to allow the player to walk left and right and jump.
